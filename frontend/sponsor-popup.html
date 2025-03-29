@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sponsor Question</title>
+  <style>
+    textarea {
+      resize: none;
+    }
+    img{
+        display: flex;
+        margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+  <img src="/images/anna_message.jpg" alt="Colleague Comic" style="max-width: 40%; height: auto;">
+  <textarea id="sponsorAnswer" rows="4" cols="50"></textarea>
+  <button onclick="sendAnswer()">Submit Answer</button>
+
+  <script>
+    function sendAnswer() {
+      const answer = document.getElementById('sponsorAnswer').value;
+      window.opener.sendSponsorshipDecision(answer);
+      window.close();
+    }
+  </script>
+</body>
+</html>

@@ -16,6 +16,9 @@ const GEMINI_API_KEY = 'AIzaSyDG2DK8trtuI7t_IwOBIW1yemNzVCUYAHo';
 // Define the Gemini API endpoint with the correct model
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-001:generateContent?key=${GEMINI_API_KEY}`;
 
+// Variable to store sponsorship feedback
+let sponsorshipFeedback = null;
+
 // Serve index.html as the default page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../frontend/index.html'));
@@ -25,13 +28,22 @@ app.get('/', (req, res) => {
 app.post('/evaluate', async (req, res) => {
   const { task, answer } = req.body;
 
-  const prompt = `You are a digital marketing expert tasked with evaluating a response for the EchoWave event.
-The objective is to create a high-impact social media post that:
-1. Captures audience attention.
-2. Highlights the event's unique features.
-3. Encourages ticket sales.
+  const prompt = `You are a digital marketing expert. Provide feedback in Georgian on the following marketing post for the EchoWave event. Evaluate its creativity, relevance, and effectiveness. Format your response using markdown, and in the following structure:
 
-Evaluate the following response for its creativity, relevance, and effectiveness:\n\nTask: ${task}\nUser’s Response: ${answer}\n\nProvide constructive feedback on how well the post meets these goals and suggest improvements.`;
+  ## ანალიზი:
+
+  **დადებითი მხარეები:**
+  - [List positive aspects using bullet points]
+
+  **გასაუმჯობესებელი მხარეები:**
+  - [List areas for improvement using bullet points]
+
+  **რეკომენდაციები:**
+  - [Provide specific recommendations using bullet points]
+
+  **Note:** Focus solely on the provided text. Do not judge the user for the absence of media files, as this is not part of their input.
+
+  Task: ${task}\nUser’s Response: ${answer}\n\nKeep your response concise and in Georgian.`;
 
   try {
     const requestBody = {
@@ -67,17 +79,20 @@ Evaluate the following response for its creativity, relevance, and effectiveness
   }
 });
 
-// Route to handle sponsorship decision
-app.post('/sponsorship', async (req, res) => {
+// Route to get the sponsor offer question
+app.get('/sponsor-question', (req, res) => {
+  const question = `You are evaluating a sponsorship decision for the EchoWave event. Two sponsors have proposed:
+    1. BrewMax – A craft beer company with a large budget but not fully aligned with the indie music vibe.
+    2. GreenSip – An eco-friendly drink brand that fits the audience but has a smaller budget.
+    Which sponsor do you choose and why?`;
+  res.json({ question });
+});
+
+// Route to evaluate the sponsorship decision
+app.post('/evaluate-sponsorship', async (req, res) => {
   const { decision } = req.body;
 
-  const prompt = `You are evaluating a sponsorship decision for the EchoWave event. Two sponsors have proposed:
-1. BrewMax – A craft beer company with a large budget but not fully aligned with the indie music vibe.
-2. GreenSip – An eco-friendly drink brand that fits the audience but has a smaller budget.
-
-User Decision: ${decision}
-
-Evaluate whether this decision supports the brand's long-term positioning and provide feedback on the reasoning.`;
+  const prompt = `Evaluate whether this sponsorship decision supports the brand's long-term positioning and provide feedback on the reasoning. Format your response using markdown. \n\nUser Decision: ${decision}\n\nKeep your response concise and in Georgian.`;
 
   try {
     const requestBody = {
@@ -99,113 +114,27 @@ Evaluate whether this decision supports the brand's long-term positioning and pr
       },
     });
 
-    const feedback =
+    console.log("Gemini API Response:", response.data); // Debugging
+
+    sponsorshipFeedback =
       response.data?.candidates?.[0]?.content?.parts?.[0]?.text.trim() ||
       'No feedback available.';
 
-    res.json({ feedback });
+    res.json({ success: true }); // Send a success message
   } catch (error) {
     console.error('Error:', error.response?.data || error.message);
     res.status(500).json({
-      feedback: 'Error while processing sponsorship decision.',
+      success: false,
       error: error.response?.data || error.message,
     });
   }
 });
 
-// Route to handle influencer decision
-app.post('/influencer', async (req, res) => {
-  const { choice } = req.body;
-
-  const prompt = `You are choosing an influencer to promote the EchoWave event. 
-Options:
-1. IndieVibesDave – Niche audience, high engagement, but pricey.
-2. SophieTheDancer – Large following but not aligned with the indie vibe.
-3. TravelWithJackie – Festival-goers, but highest cost.
-
-User Choice: ${choice}
-
-Evaluate this choice for alignment with the target audience and expected ROI, and provide suggestions if another choice would be more effective.`;
-
-  try {
-    const requestBody = {
-      contents: [
-        {
-          role: 'user',
-          parts: [
-            {
-              text: prompt,
-            },
-          ],
-        },
-      ],
-    };
-
-    const response = await axios.post(GEMINI_API_URL, requestBody, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    const feedback =
-      response.data?.candidates?.[0]?.content?.parts?.[0]?.text.trim() ||
-      'No feedback available.';
-
-    res.json({ feedback });
-  } catch (error) {
-    console.error('Error:', error.response?.data || error.message);
-    res.status(500).json({
-      feedback: 'Error while processing influencer decision.',
-      error: error.response?.data || error.message,
-    });
-  }
-});
-
-// Route to handle soundcheck issue
-app.post('/soundcheck', async (req, res) => {
-  const { option } = req.body;
-
-  const prompt = `The EchoWave event headliner’s soundcheck video sounds off. Fans might notice. You have three options:
-1. Post it as is – Authentic but might get negative feedback.
-2. Add background music & effects – More polished but less "real."
-3. Wait and post a different snippet – Safer, but delays hype.
-
-User Choice: ${option}
-
-Evaluate this decision and suggest the best approach to balance authenticity, quality, and audience engagement.`;
-
-  try {
-    const requestBody = {
-      contents: [
-        {
-          role: 'user',
-          parts: [
-            {
-              text: prompt,
-            },
-          ],
-        },
-      ],
-    };
-
-    const response = await axios.post(GEMINI_API_URL, requestBody, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    const feedback =
-      response.data?.candidates?.[0]?.content?.parts?.[0]?.text.trim() ||
-      'No feedback available.';
-
-    res.json({ feedback });
-  } catch (error) {
-    console.error('Error:', error.response?.data || error.message);
-    res.status(500).json({
-      feedback: 'Error while processing soundcheck decision.',
-      error: error.response?.data || error.message,
-    });
-  }
+// Route to get the stored sponsorship feedback
+app.get('/sponsorship-feedback', (req, res) => {
+  console.log("Sponsorship Feedback:", sponsorshipFeedback); // Debugging
+  res.json({ feedback: sponsorshipFeedback });
+  sponsorshipFeedback = null; // Clear the feedback after sending
 });
 
 // Start the server
