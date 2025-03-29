@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>სარეკლამო კამპანიის სიმულაცია</title>
+    <style>
+      :root {
+        --primary-color: #0a407a;
+        --secondary-color: #e9f5ff;
+        --accent-color: #f8f9fa;
+      }
+      @font-face {
+        font-family: myFirstFont;
+        src: url(./bpg_nino_mtavruli_normal.ttf);
+        font-weight: bold;
+      }
+
+      body {
+        font-family: myFirstFont;
+        background: linear-gradient(to bottom right, #e3f2fd, #f8f9fa);
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 80%;
+        margin: 40px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      }
+      h1 {
+        text-align: center;
+        color: var(--primary-color);
+        margin-bottom: 20px;
+      }
+      .task {
+        display: none;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        background-color: var(--accent-color);
+        margin-top: 20px;
+      }
+      .task.active {
+        display: block;
+      }
+      h2 {
+        color: var(--primary-color);
+        font-size: 24px;
+        margin-bottom: 15px;
+      }
+      label {
+        font-weight: bold;
+        margin-top: 10px;
+        display: block;
+      }
+      .btn-container {
+        text-align: right;
+        margin-top: 20px;
+      }
+      .btn {
+        padding: 10px 16px;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .btn:hover {
+        background-color: #093666;
+      }
+      .btn-back {
+        background-color: #6c757d;
+        margin-right: 10px;
+      }
+      .btn-back:hover {
+        background-color: #5a6268;
+      }
+      textarea,
+      select,
+      input {
+        width: calc(100% - 24px);
+        padding: 12px;
+        margin-top: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      textarea {
+        height: 100px;
+        resize: none;
+      }
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background-color: #f1f1f1;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-top: 20px;
+      }
+      .progress {
+        width: 25%;
+        height: 100%;
+        background-color: var(--primary-color);
+        transition: width 0.3s ease;
+      }
+      .stats-container {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        padding: 10px;
+        background-color: var(--secondary-color);
+        border: 1px solid #b3d8ff;
+        border-radius: 8px;
+      }
+      .stat {
+        font-size: 18px;
+        font-weight: bold;
+        color: var(--primary-color);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>დავალება 2: სარეკლამო კამპანიის მართვა</h1>
+      <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+      </div>
+
+      <div class="task active" id="task1">
+        <h2>🔹 აუდიტორიის შერჩევა</h2>
+        <label>ასაკობრივი ჯგუფი:</label>
+        <select id="ageGroup">
+          <option value="" disabled selected hidden>
+            აირჩიე ასაკობრივი ჯგუფი
+          </option>
+          <option>18-25</option>
+          <option>25-35</option>
+          <option>35-45</option>
+        </select>
+        <label>ინტერესები:</label>
+        <select id="interests">
+          <option value="" disabled selected hidden>აირჩიე ინტერესები</option>
+          <option>ინდური მუსიკის მოყვარულები</option>
+          <option>ლაივ ივენთების მონაწილეები</option>
+          <option>მოგზაურობისა და თავგადასავლების მაძიებლები</option>
+          <option>სოციალური მედიის ტენდენციების მიმდევრები</option>
+        </select>
+        <label>მდებარეობა:</label>
+        <select id="location">
+          <option value="" disabled selected hidden>აირჩიე მდებარეობა</option>
+          <option>თბილისი</option>
+          <option>ქუთაისი</option>
+          <option>რეგიონული ქალაქები</option>
+        </select>
+        <div class="btn-container">
+          <button class="btn" onclick="nextTask(2)">შემდეგი</button>
+        </div>
+      </div>
+
+      <div class="task" id="task2">
+        <h2>🔹 რეკლამის ტექსტის დაწერა</h2>
+        <textarea
+          id="adCopy"
+          placeholder="დაწერე რეკლამის ტექსტი აქ..."
+        ></textarea>
+        <div class="btn-container">
+          <button class="btn btn-back" onclick="prevTask(1)">უკან</button>
+          <button class="btn" onclick="nextTask(3)">შემდეგი</button>
+        </div>
+      </div>
+
+      <div class="task" id="task3">
+        <h2>🔹 ბიუჯეტის განაწილება</h2>
+        <label>💰 ინსტაგრამის რეკლამები:</label>
+        <input
+          type="number"
+          id="instagramBudget"
+          placeholder="ბიუჯეტი ინსტაგრამისთვის"
+        />
+        <label>💰 ფეისბუქის რეკლამები:</label>
+        <input
+          type="number"
+          id="facebookBudget"
+          placeholder="ბიუჯეტი ფეისბუქისთვის"
+        />
+        <label>💰 ინფლუენსერებთან პარტნიორობა:</label>
+        <input
+          type="number"
+          id="influencerBudget"
+          placeholder="ბიუჯეტი ინფლუენსერებისთვის"
+        />
+        <div class="btn-container">
+          <button class="btn btn-back" onclick="prevTask(2)">უკან</button>
+          <button class="btn" onclick="nextTask(4)">შემდეგი</button>
+        </div>
+      </div>
+
+      <div class="task" id="task4">
+        <h2>🔹 რეკლამის შესრულების მონიტორინგი</h2>
+        <div class="stats-container">
+          <div class="stat">👍 მოწონებები: <span id="likes">0</span></div>
+          <div class="stat">👀 ნახვები: <span id="views">0</span></div>
+        </div>
+        <div class="btn-container">
+          <button class="btn btn-back" onclick="prevTask(3)">უკან</button>
+          <button class="btn" onclick="validateAndSubmit()">დასრულება</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let currentTask = 1;
+      let likes = 0;
+      let views = 0;
+
+      function showTask(taskNumber) {
+        document.querySelectorAll(".task").forEach((task) => {
+          task.classList.remove("active");
+        });
+        document.getElementById(`task${taskNumber}`).classList.add("active");
+        updateProgress(taskNumber);
+        if (taskNumber === 4) startLikesAndViews();
+      }
+
+      function nextTask(taskNumber) {
+        currentTask = taskNumber;
+        showTask(taskNumber);
+      }
+
+      function prevTask(taskNumber) {
+        currentTask = taskNumber;
+        showTask(taskNumber);
+      }
+
+      function validateAndSubmit() {
+        if (validateInputs()) {
+          alert("✅ ყველა დავალება წარმატებით დასრულდა!");
+        } else {
+          alert("⚠️ გთხოვთ, შეავსოთ ყველა ველი დასრულებამდე.");
+        }
+      }
+
+      function validateInputs() {
+        return Array.from(
+          document.querySelectorAll("input, select, textarea")
+        ).every((input) => input.value.trim());
+      }
+
+      function updateProgress(taskNumber) {
+        const progress = (taskNumber - 1) * 33.3;
+        document.getElementById("progress").style.width = `${progress}%`;
+      }
+
+      function startLikesAndViews() {
+        likes = 0;
+        views = 0;
+        const likeInterval = setInterval(() => {
+          if (likes >= 500) {
+            clearInterval(likeInterval);
+          } else {
+            likes += Math.floor(Math.random() * 10) + 5;
+            views += Math.floor(Math.random() * 20) + 10;
+            document.getElementById("likes").innerText = likes;
+            document.getElementById("views").innerText = views;
+          }
+        }, 200);
+      }
+    </script>
+  </body>
+</html>
