@@ -27,12 +27,14 @@ body {
   
   textarea,
   select {
-    width: 100%;
+    width: 97%;
     padding: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
     border-radius: 4px;
     border: 1px solid #ccc;
+    resize:none;
+    overflow: auto;
   }
   
   button {
