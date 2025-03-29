@@ -20,7 +20,6 @@ const model = vertexAI.preview.getGenerativeModel({ model: 'gemini-pro' });
 // Variable to store sponsorship feedback
 let sponsorshipFeedback = null;
 
-// Serve index.html as the default page
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/index.html'));
 });
