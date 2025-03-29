@@ -60,4 +60,72 @@ body {
   #feedback {
     font-style: italic;
   }
+
+  /* ==== Task 3: Crisis Management Styling ==== */
+
+h2, h3 {
+  color: #333;
+}
+
+.step-box {
+  border: 2px solid #4a90e2;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+  background-color: #f9fbff;
+  box-shadow: 0 0 8px rgba(74, 144, 226, 0.1);
+}
+
+.step-box h2 {
+  color: #4a90e2;
+  margin-bottom: 10px;
+}
+
+.response-section {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f4f8ff;
+  border-left: 4px solid #4a90e2;
+  border-radius: 4px;
+}
+
+#announcementResponse,
+#damageResponse {
+  white-space: pre-wrap;
+  font-family: "Segoe UI", sans-serif;
+  font-size: 1rem;
+  margin-top: 10px;
+  color: #333;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  margin-right: 8px;
+}
+
+textarea {
+  margin-top: 8px;
+}
+
+button {
+  margin-top: 10px;
+  padding: 10px 18px;
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #357ab7;
+}
+
   

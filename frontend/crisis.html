@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EchoWave - Crisis Management</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🚨 Crisis Management – Headliner Cancellation</h1>
+
+    <p><strong>Scenario:</strong> Hours before EchoWave, your headliner cancels. Social media is in chaos, fans are panicking, and sponsors demand answers. You're in charge of the narrative.</p>
+
+    <!-- Step 1 -->
+    <div class="step-box">
+      <h2>🌍 Step 1: Public Announcement</h2>
+      <p>Write a public statement addressing the cancellation. Consider transparency, possible compensation, and how to keep hype alive.</p>
+      <textarea id="announcement" rows="5" placeholder="Write your public statement..."></textarea>
+      <button onclick="submitAnnouncement()">Submit Announcement</button>
+
+      <div id="announcement-feedback" class="response-section" style="display:none;">
+        <h3>📣 Fan Reactions</h3>
+        <p id="announcementResponse">Waiting for AI reaction...</p>
+        <button onclick="showDamageControl()">➡️ Continue to Step 2</button>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div id="step2" class="step-box" style="display:none;">
+      <h2>📌 Step 2: Damage Control Strategy</h2>
+
+      <h3>💬 Fan Backlash: #EchoWaveScam</h3>
+      <p>Choose your response:</p>
+      <label><input type="radio" name="fanResponse" value="A" /> A) Ignore and hope it dies down</label>
+      <label><input type="radio" name="fanResponse" value="B" /> B) Acknowledge concerns and reassure fans</label>
+      <label><input type="radio" name="fanResponse" value="C" /> C) Launch a counter-campaign highlighting other artists</label>
+
+      <h3>🤝 Sponsor Pressure</h3>
+      <textarea id="sponsorPlan" rows="3" placeholder="How do you handle the sponsor?"></textarea>
+
+      <h3>🎤 Backup Artist Dilemma</h3>
+      <textarea id="backupPlan" rows="3" placeholder="How do you promote the replacement artist?"></textarea>
+
+      <button onclick="submitDamageControl()">Submit Damage Control Plan</button>
+
+      <div id="damage-feedback" class="response-section" style="display:none;">
+        <h3>🧠 AI Feedback</h3>
+        <p id="damageResponse">Waiting for response...</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="/crisis.js"></script>
+</body>
+</html>

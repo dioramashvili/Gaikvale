@@ -6,9 +6,7 @@ const { VertexAI } = require('@google-cloud/vertexai');
 const app = express();
 app.use(bodyParser.json());
 
-// Serve frontend and static files correctly
-app.use(express.static(path.join(__dirname, '../frontend')));
-app.use(express.static(path.join(__dirname, '../public')));
+
 
 // Set the environment variable for service account credentials.
 process.env.GOOGLE_APPLICATION_CREDENTIALS = path.join(__dirname, '../rare-origin-455217-j5-908ff85bc27c.json');
@@ -91,6 +89,78 @@ app.get('/sponsorship-feedback', (req, res) => {
     sponsorshipFeedback = null; // Clear the feedback after sending
 });
 
+// Step 1: Evaluate Public Announcement
+app.post('/evaluate-announcement', async (req, res) => {
+    const { announcement } = req.body;
+
+    const prompt = `შენ ხარ გამოცდილ კრიზის მენეჯერი, რომელიც მუშაობს მუსიკალურ ფესტივალებზე. EchoWave-ის დაწყებამდე რამდენიმე საათით ადრე მთავარი არტისტი გაუქმდა. შეაფასე მოცემული საჯარო განცხადება და წარმოადგინე რეალისტური რეაქციები ქართული სოციალური მედიის მომხმარებლებისგან.
+
+გამოხატე აზრი შემდეგ სტრუქტურით (markdown ფორმატში):
+
+## 📣 ფანების რეაქციები:
+
+**🟢 მხარდამჭერები:**
+- [მომხრე კომენტარები გულშემატკივრებისგან]
+
+**🔴 განაწყენებულები:**
+- [კრიტიკული და გაბრაზებული კომენტარები]
+
+**🟡 მედიის და ცნობისმოყვარეების კითხვა/რეაგირება:**
+- [ნეიტრალური ან ჟურნალისტური ტონის კომენტარები]
+
+## 💡 შენიშვნები:
+
+- რამდენად ეფექტურია განცხადება?
+- იყო თუ არა ინფორმაციულად სრული და დამამშვიდებელი?
+- როგორ აღიქვამს ამას აუდიტორია?
+
+📄 განცხადება:
+${announcement}
+
+გთხოვ, გამოეხმაურო მხოლოდ ზემოაღნიშნულ ტექსტს. წერე ქართულად და იყოს მარტივად წასაკითხი, ბუნებრივი და რეალისტური. გამოიყენე ემოციით დატვირთული, მაგრამ პროფესიონალურად გაფორმებული ენა.`;
+
+
+    try {
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const feedback = response.candidates[0].content.parts[0].text.trim() || 'No feedback returned.';
+
+        res.json({ feedback });
+    } catch (error) {
+        console.error('Announcement Eval Error:', error);
+        res.status(500).json({ feedback: 'Error while processing announcement.', error: error.message });
+    }
+});
+
+// Step 2: Evaluate Damage Control Strategy
+app.post('/evaluate-damage-control', async (req, res) => {
+    const { fanResponse, sponsorPlan, backupPlan } = req.body;
+
+    const prompt = `You're a senior crisis management expert for music festivals. A headlining artist canceled hours before EchoWave. Here's how the team is managing the backlash:
+
+💬 Fan Twitter Response: Option ${fanResponse}
+🤝 Sponsor Pressure Plan: ${sponsorPlan}
+🎤 Backup Artist Strategy: ${backupPlan}
+
+Evaluate this damage control plan and provide feedback in Georgian. Use markdown format. Be concise but insightful.`;
+
+    try {
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const feedback = response.candidates[0].content.parts[0].text.trim() || 'No feedback returned.';
+
+        res.json({ feedback });
+    } catch (error) {
+        console.error('Damage Control Error:', error);
+        res.status(500).json({ feedback: 'Error while processing damage control.', error: error.message });
+    }
+});
+
+
+// Serve frontend and static files correctly
+app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, '../public')));
+
 // Start the server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
