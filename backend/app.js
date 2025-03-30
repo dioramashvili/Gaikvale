@@ -28,22 +28,20 @@ app.get('/', (req, res) => {
 app.post('/evaluate', async (req, res) => {
     const { task, answer } = req.body;
 
-    const prompt = `You are a digital marketing expert. Provide feedback in Georgian on the following marketing post for the EchoWave event. Evaluate its creativity, relevance, and effectiveness. Format your response using markdown, and in the following structure:
+    const prompt = `## ანალიზი:
 
-  ## ანალიზი:
+**დადებითი მხარეები:**
+- [List positive aspects using bullet points, each on a new line]
 
-  **დადებითი მხარეები:**
-  - [List positive aspects using bullet points]
+**გასაუმჯობესებელი მხარეები:**
+- [List areas for improvement using bullet points, each on a new line]
 
-  **გასაუმჯობესებელი მხარეები:**
-  - [List areas for improvement using bullet points]
+**რეკომენდაციები:**
+- [Provide specific recommendations using bullet points, each on a new line]
 
-  **რეკომენდაციები:**
-  - [Provide specific recommendations using bullet points]
+**Note:** Focus solely on the provided text. Do not judge the user for the absence of media files, as this is not part of their input.
 
-  **Note:** Focus solely on the provided text. Do not judge the user for the absence of media files, as this is not part of their input.
-
-  Task: ${task}\nUser’s Response: ${answer}\n\nKeep your response concise and in Georgian.`;
+Task: ${task}\nUser’s Response: ${answer}\n\nKeep your response concise and in Georgian, but prioritize readability through proper markdown formatting and breaklines.`;
 
     try {
         const result = await model.generateContent(prompt);
@@ -88,6 +86,57 @@ app.post('/evaluate-sponsorship', async (req, res) => {
 app.get('/sponsorship-feedback', (req, res) => {
     res.json({ feedback: sponsorshipFeedback });
     sponsorshipFeedback = null; // Clear the feedback after sending
+});
+
+//Route to evaluate task2
+app.post('/evaluate-task2', async (req, res) => {
+    const { task, answer } = req.body;
+
+    const prompt = `You are an expert marketing strategist, specializing in digital advertising for music events. 
+
+The user is planning an ad campaign for the EchoWave event. They have defined their target audience and allocated a budget across different platforms. Your task is to provide detailed feedback on their choices, covering both audience targeting and budget allocation.
+
+Here is the information provided by the user:
+
+**Target Audience:**
+
+* **Age Group:** [User's selected age group]
+* **Interests:** [List of user's selected interests, separated by commas]
+* **Location:** [User's selected location]
+
+**Budget Allocation (Total: $1,000):**
+
+* **Instagram Ads:** $[User's Instagram budget]
+* **Facebook Ads:** $[User's Facebook budget]
+* **Influencer Partnerships:** $[User's Influencer budget]
+
+**Your Feedback Should Include:**
+
+1.  **Audience Targeting Analysis:**
+    * Evaluate the coherence and effectiveness of the selected age group, interests, and location for a music event like EchoWave.
+    * Discuss if the chosen audience aligns with the likely attendees of an indie music event.
+    * Give specific feedback about the selected interests.
+2.  **Budget Allocation Evaluation:**
+    * Assess the balance and distribution of the budget across Instagram, Facebook, and influencer partnerships.
+    * Consider the relevance of each platform to the target audience and the event's nature.
+    * Provide feedback about the percentage of the budget that is allocated to each section.
+3.  **Recommendations:**
+    * Suggest any adjustments or improvements to the audience targeting or budget allocation.
+    * Offer strategic advice on maximizing the campaign's impact.
+4.  **Overall Strategy:**
+    * Give an overall opinion of the users marketing strategy.
+
+Format your response using markdown and write in georgian. Keep your response concise and focused.`;
+
+    try {
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        const feedback = response.candidates[0].content.parts[0].text.trim() || 'No feedback available.';
+        res.json({ feedback });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ feedback: 'Error while processing request.', error: error.message });
+    }
 });
 
 // Start the server

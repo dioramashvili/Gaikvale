@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EchoWave - Task 2: Ad Campaign</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>📣 Task 2: Running an Ad Campaign</h1>
+    <p><strong>Scenario:</strong> You’re preparing a full ad campaign to build excitement over the next month. Step 1 is defining your audience carefully.</p>
+
+    <h2>🔹 Step 1: Audience Targeting</h2>
+    <form id="audienceForm">
+      <label><strong>🎛 Age Group:</strong></label><br>
+      <select id="ageGroup">
+        <option value="18-25">18-25</option>
+        <option value="25-35">25-35</option>
+        <option value="35-45">35-45</option>
+      </select><br><br>
+
+      <label><strong>🎛 Interests:</strong></label><br>
+      <input type="checkbox" value="Indie Music" /> Indie Music<br>
+      <input type="checkbox" value="Live Events" /> Live Events<br>
+      <input type="checkbox" value="Travel" /> Travel<br>
+      <input type="checkbox" value="Social Media Trends" /> Social Media Trends<br><br>
+
+      <label><strong>🎛 Location:</strong></label><br>
+      <select id="location">
+        <option value="Tbilisi">Tbilisi</option>
+        <option value="Whole Georgia">Whole Georgia</option>
+        <option value="Regional Cities">Regional Cities</option>
+      </select><br><br>
+
+      <button type="button" onclick="submitAudience()">Submit Targeting</button>
+    </form>
+
+    <div id="step3" style="display:none;">
+        <h2>🔹 Step 3: Budget Allocation</h2>
+        <p>You have $1,000. Allocate your ad budget:</p>
+      
+        <label>💰 Instagram Ads:</label><br>
+        <input type="number" id="instagramBudget" placeholder="$" /><br><br>
+      
+        <label>💰 Facebook Ads:</label><br>
+        <input type="number" id="facebookBudget" placeholder="$" /><br><br>
+      
+        <label>💰 Influencer Partnerships:</label><br>
+        <input type="number" id="influencerBudget" placeholder="$" /><br><br>
+      
+        <button onclick="submitBudget()">Submit Budget Allocation</button>
+      
+        <div id="budget-feedback" class="response-section" style="display:none;">
+          <h3>📊 Final AI Feedback</h3>
+          <p id="budgetResponse">Waiting for response...</p>
+        </div>
+      </div>
+      
+  </div>
+
+  <script src="task2.js"></script>
+</body>
+</html>
