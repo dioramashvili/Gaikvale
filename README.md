@@ -1,3 +1,1 @@
 # Gaikvale
-
-HEY THERE START
