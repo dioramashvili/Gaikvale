@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ka">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>გაიკვალე</title>
+    <style>
+      /* General Styles */
+      :root {
+        --primary-color: #4a90e2;
+        --secondary-color: #222;
+        --light-color: #f9f9f9;
+        --text-color: #333;
+        --transition: all 240ms ease-in-out;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Firago", sans-serif;
+        background-color: var(--light-color);
+        color: var(--text-color);
+      }
+
+      /* Navbar */
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 2rem 10rem;
+        background: rgb(255, 255, 255);
+        box-shadow: 0 2px 20px rgba(50, 50, 50, 0.1);
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        font-size: 24px;
+      }
+
+      .navbar div {
+        display: flex;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 24px;
+        font-weight: bold;
+        color: var(--primary-color);
+        display: flex;
+        align-items: center;
+      }
+
+      .logo img {
+        width:50px;
+        height: 50px;
+        margin-right: 10px;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2rem;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: var(--secondary-color);
+        font-size: 18px;
+        font-weight: 500;
+        transition: var(--transition);
+        border: 1px solid rgba(0, 0, 0, 0.4);
+        padding: 4px 16px;
+        border-radius: 12px;
+      }
+
+      .nav-links a:hover {
+        border: 1px solid var(--primary-color);
+      }
+
+      .nav-link {
+        text-decoration: none;
+        color: var(--secondary-color);
+        font-size: 16px;
+        font-weight: 500;
+        transition: var(--transition);
+      }
+
+      .nav-link:hover {
+        color: var(--primary-color);
+      }
+
+      /* Hero Section */
+      .hero {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12rem 6rem;
+        gap: 3rem;
+      }
+
+      .text {
+        max-width: 50%;
+      }
+
+      .text h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        line-height: 1.3;
+        color: var(--secondary-color);
+      }
+
+      .text p {
+        font-size: 1.1rem;
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+
+      .image img {
+        width: 100%;
+        max-width: 500px;
+        border-radius: 10px;
+      }
+
+      /* Sections */
+      section {
+        text-align: center;
+        padding: 4rem 6rem;
+      }
+
+      h2 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+      }
+
+      /* Statistics */
+      .statistics {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .stat-item {
+        max-width: 300px;
+        background: white;
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-item img {
+        width: 100%;
+        border-radius: 10px;
+      }
+
+      .why-us {
+        background-color: white;
+      }
+
+      .why-us h2 {
+        margin-bottom: 4rem;
+      }
+
+      .courses h2 {
+        margin-bottom: 2rem;
+      }
+
+      /* Courses */
+      .course-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        justify-items: center;
+      }
+
+      .course-grid a {
+        text-decoration: none;
+        color: var(--secondary-color);
+        text-align: center;
+        background: white;
+        padding: 1rem;
+        border-radius: 10px;
+        transition: var(--transition);
+      }
+
+      .course-grid a:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .course-grid img {
+        width: 100%;
+        border-radius: 10px;
+      }
+
+      /* Footer */
+      footer {
+        background: rgb(17, 17, 17);
+        color: white;
+        text-align: center;
+        padding: 2rem 0;
+      }
+
+      footer p {
+        margin: 0.5rem 0;
+      }
+
+      .social-links a {
+        color: white;
+        margin: 0 1rem;
+        text-decoration: none;
+        transition: var(--transition);
+      }
+
+      .social-links a:hover {
+        color: var(--primary-color);
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar">
+        <div class="logo">
+            <img src="/images/logo.png" alt="Logo" />
+            <span>გაიკვალე</span>
+        </div>
+        <div class="nav-links">
+          <a href="/about" class="nav-link">ჩვენს შესახებ</a>
+          <a href="/contact" class="nav-link">დაგვიკავშირდი</a>
+        </div>
+      </nav>
+    </header>
+    <section class="hero">
+      <div class="text">
+        <h1>
+          ჩვენი ვებ-საიტი ეხმარება სკოლის მოსწავლეებს უკეთ გააცნობიერონ, რომელ
+          სფეროში და რატომ უნდა ჩააბარონ.
+        </h1>
+        <p>
+          ჩვენ გთავაზობთ დეტალურ ინფორმაციას სხვადასხვა პროფესიის შესახებ და
+          სიმულაციებს, რომლებიც დაეხმარებათ უკეთ გაიაზრონ სფეროს სპეციფიკა,
+          ყოველდღიური ამოცანები და გამოწვევები. ეს გამოცდილება მათ საშუალებას
+          მისცემს გააცნობიერონ, რამდენად შეესაბამება პროფესია მათ ინტერესებსა და
+          უნარებს.
+        </p>
+      </div>
+      <div class="image">
+        <img src="/images/landing.png" alt="Educational" />
+      </div>
+    </section>
+    <section class="why-us">
+      <h2>რატომ ჩვენ?</h2>
+      <p>ჩვენ გთავაზობთ უნიკალურ მიდგომას, რომელიც ეხმარება მოსწავლეებს გააცნობიერონ მათი პროფესიული მიმართულება პრაქტიკული გამოცდილების საშუალებით.</p>
+    </section>
+    
+    <section class="courses">
+      <h2>აირჩიე კურსი</h2>
+      <div class="course-grid">
+        <a href="/courses/computer-science">
+          <img src="/images/computer-science.png" alt="Computer Science" />
+          <h3>კომპიუტერული მეცნიერება</h3>
+        </a>
+        <a href="/courses/law">
+          <img src="/images/law.jpg" alt="Law" />
+          <h3>სამართალი</h3>
+        </a>
+        <a href="./marketing.html">
+          <img src="/images/marketing.png" alt="Marketing" />
+          <h3>მარკეტინგი</h3>
+        </a>
+      </div>
+    </section>
+    <footer>
+      <h3>დაგვიკავშირდით</h3>
+      <p>ელ. ფოსტა: info@gaikvale.ge</p>
+      <p>ტელეფონი: +995 555 123 456</p>
+      <div class="social-links">
+        <a href="#">Facebook</a>
+        <a href="#">Instagram</a>
+        <a href="#">LinkedIn</a>
+      </div>
+      <p>&copy; <span id="year"></span> გაიკვალე. ყველა უფლება დაცულია.</p>
+    </footer>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
