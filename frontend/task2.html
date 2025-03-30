@@ -1,64 +1,224 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>EchoWave - Task 2: Ad Campaign</title>
-  <link rel="stylesheet" href="/styles.css" />
-</head>
-<body>
-  <div class="container">
-    <h1>📣 Task 2: Running an Ad Campaign</h1>
-    <p><strong>Scenario:</strong> You’re preparing a full ad campaign to build excitement over the next month. Step 1 is defining your audience carefully.</p>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EchoWave Marketing Dashboard</title>
+    <style>
+      :root {
+        --primary-color: #4a90e2;
+        --secondary-color: #222;
+        --light-color: #f9f9f9;
+        --text-color: #333;
+        --transition: all 240ms ease-in-out;
+      }
 
-    <h2>🔹 Step 1: Audience Targeting</h2>
-    <form id="audienceForm">
-      <label><strong>🎛 Age Group:</strong></label><br>
-      <select id="ageGroup">
-        <option value="18-25">18-25</option>
-        <option value="25-35">25-35</option>
-        <option value="35-45">35-45</option>
-      </select><br><br>
+      body {
+        margin: 0;
+        font-family: "Firago", sans-serif;
+        background-color: #001f3f;
+        color: var(--text-color);
+      }
 
-      <label><strong>🎛 Interests:</strong></label><br>
-      <input type="checkbox" value="Indie Music" /> Indie Music<br>
-      <input type="checkbox" value="Live Events" /> Live Events<br>
-      <input type="checkbox" value="Travel" /> Travel<br>
-      <input type="checkbox" value="Social Media Trends" /> Social Media Trends<br><br>
+      .container {
+        background-color: white;
+        border-radius: 16px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+        text-align: left;
+        padding: 30px;
+        width: 90%;
+        max-width: 1000px;
+        margin: 40px auto;
+      }
 
-      <label><strong>🎛 Location:</strong></label><br>
-      <select id="location">
-        <option value="Tbilisi">Tbilisi</option>
-        <option value="Whole Georgia">Whole Georgia</option>
-        <option value="Regional Cities">Regional Cities</option>
-      </select><br><br>
+      h1 {
+        text-align: center;
+        font-size: 28px;
+      }
 
-      <button type="button" onclick="submitAudience()">Submit Targeting</button>
-    </form>
+      label {
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0.5rem auto;
+      }
 
-    <div id="step3" style="display:none;">
-        <h2>🔹 Step 3: Budget Allocation</h2>
+      textarea,
+      select,
+      input {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        margin-top: 5px;
+        font-size: 16px;
+      }
+
+      input[type="checkbox"] {
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--primary-color);
+        border-radius: 4px;
+        position: relative;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      input[type="checkbox"]:checked {
+        background-color: var(--primary-color);
+        border-color: var(--primary-color);
+      }
+
+      input[type="checkbox"]:checked::after {
+        content: "\2713";
+        font-size: 16px;
+        color: white;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      select {
+        appearance: none;
+        background-color: white;
+        border: 2px solid var(--primary-color);
+        padding: 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        position: relative;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234a90e2" width="18px" height="18px"><path d="M7 10l5 5 5-5z"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 12px center;
+        background-size: 16px;
+      }
+
+      button {
+        padding: 12px 24px;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 18px;
+        transition: var(--transition);
+        margin-top: 10px;
+        width: 100%;
+      }
+
+      button:hover {
+        background-color: #357abd;
+      }
+
+      .response-section {
+        text-align: center;
+        padding: 2rem 5%;
+        background: white;
+        margin-top: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .step-image {
+        display: block;
+        max-width: 100%;
+        margin: 20px auto;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>📣 Running an Ad Campaign</h1>
+      <p>
+        <strong>Scenario:</strong> You’re preparing a full ad campaign to build
+        excitement over the next month. Step 1 is defining your audience
+        carefully.
+      </p>
+
+      <!-- Image BEFORE step 1 -->
+      <img src="/images/task22.png" alt="Intro" class="step-image" />
+
+      <h2>🔹 Audience Targeting</h2>
+      <form id="audienceForm">
+        <label><strong>Age Group:</strong></label>
+        <select id="ageGroup" style="margin-bottom: 1rem">
+          <option value="18-25">18-25</option>
+          <option value="25-35">25-35</option>
+          <option value="35-45">35-45</option>
+        </select>
+
+        <br />
+        <label><strong>Interests:</strong></label>
+        <label><input type="checkbox" value="Indie Music" />Indie Music </label>
+        <label><input type="checkbox" value="Live Events" />Live Events </label>
+        <label><input type="checkbox" value="Travel" /> Travel</label>
+        <label
+          ><input type="checkbox" value="Social Media Trends" />Social Media
+          Trends</label
+        >
+
+        <br />
+        <label><strong>Location:</strong></label>
+        <select id="location">
+          <option value="Tbilisi">Tbilisi</option>
+          <option value="Whole Georgia">Whole Georgia</option>
+          <option value="Regional Cities">Regional Cities</option>
+        </select>
+
+        <br />
+        <button type="button" onclick="submitAudience()">შემდეგი</button>
+      </form>
+
+      <!-- Image AFTER Step 1 -->
+      <img
+        id="step2-image"
+        src="/images/task222.png"
+        alt="Step 2"
+        class="step-image"
+        style="display: none"
+      />
+
+      <div id="step3" style="display: none">
+        <h2>🔹 Budget Allocation</h2>
         <p>You have $1,000. Allocate your ad budget:</p>
-      
-        <label>💰 Instagram Ads:</label><br>
-        <input type="number" id="instagramBudget" placeholder="$" /><br><br>
-      
-        <label>💰 Facebook Ads:</label><br>
-        <input type="number" id="facebookBudget" placeholder="$" /><br><br>
-      
-        <label>💰 Influencer Partnerships:</label><br>
-        <input type="number" id="influencerBudget" placeholder="$" /><br><br>
-      
-        <button onclick="submitBudget()">Submit Budget Allocation</button>
-      
-        <div id="budget-feedback" class="response-section" style="display:none;">
+
+        <label>💰 Instagram Ads:</label>
+        <input type="number" id="instagramBudget" placeholder="$" />
+
+        <label>💰 Facebook Ads:</label>
+        <input type="number" id="facebookBudget" placeholder="$" />
+
+        <label>💰 Influencer Partnerships:</label>
+        <input type="number" id="influencerBudget" placeholder="$" />
+
+        <button onclick="submitBudget()">შემდეგი</button>
+
+        <!-- Image AFTER Step 3 -->
+        <img
+          id="final-image"
+          src="/images/task2.png"
+          alt="Final"
+          class="step-image"
+          style="display: none"
+        />
+
+        <div
+          id="budget-feedback"
+          class="response-section"
+        >
           <h3>📊 Final AI Feedback</h3>
           <p id="budgetResponse">Waiting for response...</p>
         </div>
       </div>
-      
-  </div>
+      <a id="unlock-next-task" style="display: none" href="./task3.html">
+        <button>შემდეგი</button>
+      </a>
+    </div>
 
-  <script src="task2.js"></script>
-</body>
+    <script src="task2.js"></script>
+  </body>
 </html>

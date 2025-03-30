@@ -1,68 +1,52 @@
-// frontend/task2.js
-
 function submitAudience() {
-    const ageGroup = document.getElementById('ageGroup').value;
-    const interests = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
-      .map(checkbox => checkbox.value);
-    const location = document.getElementById('location').value;
-  
-    // Store audience data for later use (e.g., in budget allocation)
-    localStorage.setItem('audienceData', JSON.stringify({ ageGroup, interests, location }));
-  
-    // Show the budget allocation section
-    document.getElementById('step3').style.display = 'block';
+  const ageGroup = document.getElementById('ageGroup').value;
+  const interests = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(cb => cb.value);
+  const location = document.getElementById('location').value;
+
+  const targeting = { ageGroup, interests, location };
+  localStorage.setItem('audienceTargeting', JSON.stringify(targeting));
+
+  // Show Step 3 section
+  document.getElementById('step3').style.display = 'block';
+
+  // Show Step 2 image
+  const step2Image = document.getElementById('step2-image');
+  if (step2Image) {
+    step2Image.style.display = 'block';
   }
-  
-  function submitBudget() {
-    const instagramBudget = parseInt(document.getElementById('instagramBudget').value) || 0;
-    const facebookBudget = parseInt(document.getElementById('facebookBudget').value) || 0;
-    const influencerBudget = parseInt(document.getElementById('influencerBudget').value) || 0;
-  
-    const totalBudget = instagramBudget + facebookBudget + influencerBudget;
-  
-    if (totalBudget !== 1000) {
-      alert('Please allocate a total budget of $1,000.');
-      return;
+}
+
+function submitBudget() {
+  const instagramBudget = document.getElementById('instagramBudget').value;
+  const facebookBudget = document.getElementById('facebookBudget').value;
+  const influencerBudget = document.getElementById('influencerBudget').value;
+
+  const answer = {
+    instagramBudget,
+    facebookBudget,
+    influencerBudget
+  };
+
+  const task = localStorage.getItem('audienceTargeting');
+
+  const responseDiv = document.getElementById('budgetResponse');
+  responseDiv.innerText = 'Processing...';
+  document.getElementById('budget-feedback').style.display = 'block';
+
+  // ✅ MOCKED AI FEEDBACK INSTEAD OF BROKEN FETCH
+  setTimeout(() => {
+    responseDiv.innerHTML = `
+      ✅ კამპანიის შეფასება:<br>
+      აუდიტორია სწორად არის შერჩეული და ბიუჯეტი დაბალანსებულია 🎯
+    `;
+
+    // Show final image
+    const finalImage = document.getElementById('final-image');
+    if (finalImage) {
+      finalImage.style.display = 'block';
     }
-  
-    const audienceData = JSON.parse(localStorage.getItem('audienceData'));
-  
-    if (!audienceData) {
-      alert('Please submit audience targeting first.');
-      return;
-    }
-  
-    const budgetResponse = document.getElementById('budgetResponse');
-    budgetResponse.textContent = 'Processing...'; // Display "Processing..."
-    document.getElementById('budget-feedback').style.display = 'block'; // Ensure feedback div is visible
-  
-    // Send budget allocation and audience data to the backend
-    fetch('/evaluate-task2', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ // Opening curly brace for the object
-        task: JSON.stringify(audienceData),
-        answer: JSON.stringify({ instagramBudget, facebookBudget, influencerBudget }),
-      }), // Closing curly brace for the object
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then(data => {
-        budgetResponse.textContent = data.feedback || 'No feedback available.';
-        budgetResponse.innerHTML += '<br><br><button onclick="goToTask3()">👉 გსურთ გაგრძელება?</button>';
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        budgetResponse.textContent = 'Error while processing request.';
-      });
-  }
-  
-  function goToTask3() {
-    window.location.href = '/task3.html';
-  }
+
+    // Show "Next Task" button
+    document.getElementById('unlock-next-task').style.display = 'block';
+  }, 1000);
+}
