@@ -3,17 +3,62 @@
 <head>
   <title>Sponsor Question</title>
   <style>
-    textarea {
-      resize: none;
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
     }
-    img{
-        display: flex;
-        margin: 0 auto;
+
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .container img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      resize: vertical;
+      font-size: 1rem;
+    }
+
+    button {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
     }
   </style>
 </head>
 <body>
-  <img src="/images/anna_message.jpg" alt="Colleague Comic" style="max-width: 40%; height: auto;">
+  <img src="images/anna_message.jpg" alt="Colleague Comic" style="max-width: 40%; height: auto;">
   <textarea id="sponsorAnswer" rows="4" cols="50"></textarea>
   <button onclick="sendAnswer()">Submit Answer</button>
 
