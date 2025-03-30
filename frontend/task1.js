@@ -14,6 +14,7 @@ async function submitResponse(route, userInput) {
   
       const result = await response.json();
       responseDiv.innerHTML = result.feedback || 'No feedback available.'; // Use innerHTML for markdown
+      responseDiv.innerHTML += `<br><br><button onclick="goToTask2()">👉 გსურთ გაგრძელება?</button>`;
       getSponsorshipFeedback(); // Get sponsorship feedback after main task
     } catch (error) {
       responseDiv.innerText = 'Error while processing request.';
@@ -74,4 +75,8 @@ function openSponsorPopupOnce() {
     const sponsorPopup = window.open('/sponsor-popup.html', 'Sponsor Question', 'width=600,height=400');
     popupOpened = true; // Set flag to true
   }
+}
+
+function goToTask2(){
+  window.location.href = '/task2.html'
 }
